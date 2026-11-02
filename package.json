@@ -1,23 +1,38 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "StudioSpace API — Express 5 + TypeScript + MongoDB",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon --watch src --ext ts --exec tsx src/server.ts",
+    "start": "tsx src/server.ts",
+    "seed": "tsx src/seed/seed.ts",
+    "dev:db": "tsx src/dev/embedded-db.ts",
+    "smoke": "node scripts/smoke.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.8.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
-    "nodemon": "^3.1.14"
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongodb": "^4.0.6",
+    "@types/node": "^26.6.6",
+    "mongodb-memory-server": "^11.3.0",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

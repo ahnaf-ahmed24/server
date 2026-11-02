@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
@@ -12,6 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false
   },
-  "include": ["**/*.js"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

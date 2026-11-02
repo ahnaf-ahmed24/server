@@ -8,7 +8,7 @@ export class HttpError extends Error {
   }
 }
 
-/** Express 5 friendly async wrapper so rejected promises hit the error handler. */
+
 export const wrap =
   (fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>): RequestHandler =>
   (req, res, next) => {
