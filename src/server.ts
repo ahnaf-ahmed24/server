@@ -1,56 +1,14 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
 import type { Server } from "node:http";
 
+import app from "./app";
 import { env, clientOrigin } from "./config/env";
 import { getDb } from "./db/mongo";
-import { notFoundHandler, errorHandler } from "./middleware/errors";
-import { authRouter } from "./routes/auth";
-import { studiosRouter } from "./routes/studios";
-import { wishlistRouter } from "./routes/wishlist";
-import { bookingsRouter } from "./routes/bookings";
-import { reviewsRouter } from "./routes/reviews";
 
-const app = express();
-
-app.set("trust proxy", 1);
-app.use(
-  cors({
-    origin: env.clientOrigins,
-    credentials: true,
-  })
-);
-app.use(express.json({ limit: "1mb" }));
-app.use(cookieParser());
-
-app.get("/api/health", async (_req, res) => {
-  let dbStatus = "connected";
-  try {
-    const db = await getDb();
-    await db.command({ ping: 1 });
-  } catch {
-    dbStatus = "unreachable";
-  }
-  res.json({
-    success: true,
-    message: "StudioSpace API is running.",
-    data: {
-      ok: true,
-      db: dbStatus,
-      time: new Date().toISOString(),
-    },
-  });
-});
-
-app.use("/api/auth", authRouter);
-app.use("/api/studios", studiosRouter);
-app.use("/api/wishlist", wishlistRouter);
-app.use("/api/bookings", bookingsRouter);
-app.use("/api", reviewsRouter); 
-
-app.use(notFoundHandler);
-app.use(errorHandler);
+/**
+ * Local/long-running entry point. Builds the app (no side effects) and only
+ * binds a port in-process — on Vercel the platform invokes the exported app
+ * itself, so an import here must never listen or connect at module top-level.
+ */
 
 let server: Server | null = null;
 
@@ -73,13 +31,13 @@ function start(): Server {
   return server;
 }
 
-getDb()
-  .then(async (db) => {
+/** Fail loudly if the DB is unreachable at boot so misconfiguration is obvious. */
+async function boot(): Promise<void> {
+  try {
+    const db = await getDb();
     await db.command({ ping: 1 });
     console.log("✅ Connected to MongoDB.");
-    start();
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error(
       "❌ Could not connect to MongoDB at startup:",
       error instanceof Error ? error.message : error
@@ -87,7 +45,16 @@ getDb()
     console.error(
       "   Set MONGODB_URI in server/.env (or run `npm run dev:db` for an embedded dev database)."
     );
-    start();
-  });
+  }
+  // Keep serving /api/health so the failure is observable from the client.
+  start();
+}
 
+// Serverless runtimes (Vercel sets VERCEL=1) invoke the handler per request —
+// never bind a port there, which would also make `tsx` hang after import.
+if (!process.env.VERCEL) {
+  void boot();
+}
+
+export { server, app };
 export default app;
