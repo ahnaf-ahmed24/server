@@ -1,8 +1,8 @@
 import type { Server } from "node:http";
 
-import app from "./app";
-import { env, clientOrigin } from "./config/env";
-import { getDb } from "./db/mongo";
+import app from "./app.js";
+import { env, clientOrigin } from "./config/env.js";
+import { getDb } from "./db/mongo.js";
 
 /**
  * Local/long-running entry point. Builds the app (no side effects) and only

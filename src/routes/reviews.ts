@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { ObjectId, type WithId } from "mongodb";
-import { getCollection } from "../db/mongo";
-import { requireAuth } from "../middleware/auth";
-import { HttpError, sendSuccess, wrap } from "../utils/helpers";
-import { authedUser } from "../utils/current-user";
-import type { ReviewDoc, StudioDoc } from "../types";
+import { getCollection } from "../db/mongo.js";
+import { requireAuth } from "../middleware/auth.js";
+import { HttpError, sendSuccess, wrap } from "../utils/helpers.js";
+import { authedUser } from "../utils/current-user.js";
+import type { ReviewDoc, StudioDoc } from "../types.js";
 
 export const reviewsRouter = Router();
 

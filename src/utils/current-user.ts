@@ -1,7 +1,7 @@
 import { ObjectId, type WithId } from "mongodb";
-import { getCollection } from "../db/mongo";
-import { HttpError } from "./helpers";
-import type { AuthPayload, UserDoc } from "../types";
+import { getCollection } from "../db/mongo.js";
+import { HttpError } from "./helpers.js";
+import type { AuthPayload, UserDoc } from "../types.js";
 
 export async function authedUser(auth: AuthPayload): Promise<WithId<UserDoc>> {
   const users = await getCollection<UserDoc>("users");

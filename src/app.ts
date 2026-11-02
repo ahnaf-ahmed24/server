@@ -2,14 +2,14 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import { env } from "./config/env";
-import { getDb } from "./db/mongo";
-import { notFoundHandler, errorHandler } from "./middleware/errors";
-import { authRouter } from "./routes/auth";
-import { studiosRouter } from "./routes/studios";
-import { wishlistRouter } from "./routes/wishlist";
-import { bookingsRouter } from "./routes/bookings";
-import { reviewsRouter } from "./routes/reviews";
+import { env } from "./config/env.js";
+import { getDb } from "./db/mongo.js";
+import { notFoundHandler, errorHandler } from "./middleware/errors.js";
+import { authRouter } from "./routes/auth.js";
+import { studiosRouter } from "./routes/studios.js";
+import { wishlistRouter } from "./routes/wishlist.js";
+import { bookingsRouter } from "./routes/bookings.js";
+import { reviewsRouter } from "./routes/reviews.js";
 
 /**
  * The Express app — built with zero side effects (no listen, no DB connect)

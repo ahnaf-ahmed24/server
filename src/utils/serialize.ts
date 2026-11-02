@@ -1,5 +1,5 @@
 import type { ObjectId, WithId } from "mongodb";
-import type { StudioDoc, UserDoc } from "../types";
+import type { StudioDoc, UserDoc } from "../types.js";
 
 
 export interface PublicUser {

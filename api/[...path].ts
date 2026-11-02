@@ -8,6 +8,6 @@
  * `src/app.ts` has no side effects: the platform invokes this exported app
  * per request; nothing binds a port or connects at import time.
  */
-import app from "../src/app";
+import app from "../src/app.js";
 
 export default app;

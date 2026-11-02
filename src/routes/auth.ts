@@ -2,13 +2,13 @@ import { Router, type Request, type Response } from "express";
 import { randomBytes } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "mongodb";
-import { getCollection } from "../db/mongo";
-import { clientOrigin, env } from "../config/env";
-import { signToken, verifyToken } from "../utils/jwt";
-import { AUTH_COOKIE, clearAuthCookie, setAuthCookie } from "../utils/cookies";
-import { HttpError, sendSuccess, wrap } from "../utils/helpers";
-import { oidToString, serializeUser, type PublicUser } from "../utils/serialize";
-import type { AuthPayload, UserDoc } from "../types";
+import { getCollection } from "../db/mongo.js";
+import { clientOrigin, env } from "../config/env.js";
+import { signToken, verifyToken } from "../utils/jwt.js";
+import { AUTH_COOKIE, clearAuthCookie, setAuthCookie } from "../utils/cookies.js";
+import { HttpError, sendSuccess, wrap } from "../utils/helpers.js";
+import { oidToString, serializeUser, type PublicUser } from "../utils/serialize.js";
+import type { AuthPayload, UserDoc } from "../types.js";
 
 export const authRouter = Router();
 

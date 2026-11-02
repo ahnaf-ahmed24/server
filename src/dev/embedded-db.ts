@@ -16,7 +16,7 @@ async function main() {
   const uri = mongod.getUri().replace(/\/$/, "");
 
   process.env.MONGODB_URI = uri;
-  const { seedStudios } = await import("../seed/seed");
+  const { seedStudios } = await import("../seed/seed.js");
   await seedStudios();
 
   console.log("─────────────────────────────────────────────────");

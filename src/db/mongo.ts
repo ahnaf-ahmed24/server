@@ -1,5 +1,5 @@
 import { MongoClient, type Db, type Document } from "mongodb";
-import { env } from "../config/env";
+import { env } from "../config/env.js";
 
 /**
  * Serverless runtimes (Vercel) may re-instantiate the module registry across

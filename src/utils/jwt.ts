@@ -1,6 +1,6 @@
 import jwt, { type SignOptions } from "jsonwebtoken";
-import type { AuthPayload } from "../types";
-import { env } from "../config/env";
+import type { AuthPayload } from "../types.js";
+import { env } from "../config/env.js";
 
 const TOKEN_TTL = "7d";
 

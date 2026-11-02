@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { HttpError } from "../utils/helpers";
+import { HttpError } from "../utils/helpers.js";
 
 export function notFoundHandler(req: Request, res: Response) {
   res.status(404).json({

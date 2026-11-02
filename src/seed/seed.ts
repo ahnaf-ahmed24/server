@@ -1,5 +1,5 @@
-import { getDb } from "../db/mongo";
-import { SEED_STUDIOS } from "./studios";
+import { getDb } from "../db/mongo.js";
+import { SEED_STUDIOS } from "./studios.js";
 
 export async function seedStudios(verbose = true): Promise<number> {
   const db = await getDb();

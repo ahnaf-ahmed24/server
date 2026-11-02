@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import { AUTH_COOKIE } from "../utils/cookies";
-import { verifyToken } from "../utils/jwt";
-import { sendError } from "../utils/helpers";
-import type { AuthPayload } from "../types";
+import { AUTH_COOKIE } from "../utils/cookies.js";
+import { verifyToken } from "../utils/jwt.js";
+import { sendError } from "../utils/helpers.js";
+import type { AuthPayload } from "../types.js";
 
 declare module "express-serve-static-core" {
   interface Request {

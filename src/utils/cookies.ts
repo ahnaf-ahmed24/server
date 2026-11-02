@@ -1,5 +1,5 @@
 import type { Response } from "express";
-import { env } from "../config/env";
+import { env } from "../config/env.js";
 
 export const AUTH_COOKIE = "token";
 

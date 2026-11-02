@@ -1,4 +1,4 @@
-import type { StudioDoc } from "../types";
+import type { StudioDoc } from "../types.js";
 
 const img = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=80`;
