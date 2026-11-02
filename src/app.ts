@@ -11,18 +11,12 @@ import { wishlistRouter } from "./routes/wishlist.js";
 import { bookingsRouter } from "./routes/bookings.js";
 import { reviewsRouter } from "./routes/reviews.js";
 
-/**
- * The Express app — built with zero side effects (no listen, no DB connect)
- * so both the local server entry (src/server.ts) and the Vercel serverless
- * entry (api/[...path].ts) can import it safely.
- */
+
 const app = express();
 
-// Behind Render/Vercel proxies in production — keeps req.protocol correct for
-// OAuth redirect URIs + secure cookies.
 app.set("trust proxy", 1);
 
-/* ------------------------------ middleware ----------------------------- */
+
 app.use(
   cors({
     origin: env.clientOrigins,
@@ -32,7 +26,34 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
 
-/* -------------------------------- routes ------------------------------- */
+
+
+
+app.get("/", (_req, res) => {
+  res.json({
+    success: true,
+    message: "StudioSpace API is running.",
+    data: {
+      service: "StudioSpace API",
+      health: "/api/health",
+      apiBase: "/api",
+      time: new Date().toISOString(),
+    },
+  });
+});
+
+
+app.get("/api", (_req, res) => {
+  res.json({
+    success: true,
+    message: "StudioSpace API root. Endpoints are mounted under /api/<resource>.",
+    data: {
+      health: "/api/health",
+      resources: ["auth", "studios", "wishlist", "bookings", "reviews"],
+    },
+  });
+});
+
 app.get("/api/health", async (_req, res) => {
   let dbStatus = "connected";
   try {
