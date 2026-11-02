@@ -1,8 +1,12 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "functions": {
-    "api/**": {
-      "maxDuration": 30
+    "api/expensive-task.js": {
+      "maxDuration": 60,
+      "memory": 1024
+    },
+    "api/edge-route.js": {
+      "runtime": "edge"
     }
   }
 }
