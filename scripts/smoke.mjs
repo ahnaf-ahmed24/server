@@ -64,7 +64,7 @@ class Session {
     try {
       json = await res.json();
     } catch {
-      /* non-JSON */
+
     }
     return { status: res.status, json };
   }
@@ -109,7 +109,7 @@ async function main() {
         const res = await fetch(`${API}/health`);
         healthy = res.ok;
       } catch {
-        /* retry */
+
       }
     }
     if (!healthy) {
@@ -121,7 +121,7 @@ async function main() {
     const B = new Session();
     const guest = new Session();
 
-    
+
     let r = await A.call("/auth/register", {
       method: "POST",
       body: {
@@ -155,7 +155,7 @@ async function main() {
     r = await guest.call("/auth/me");
     check("guest me returns user:null", r.status === 200 && r.json?.data?.user === null);
 
-    
+
     const tomorrow = new Date(Date.now() + 24 * 3600 * 1000);
     const date = tomorrow.toISOString().slice(0, 10);
 
@@ -204,11 +204,11 @@ async function main() {
     r = await guest.call("/studios/999000000000000000000000");
     check("unknown studio id → 404", r.status === 404);
 
-    
+
     r = await A.call(`/studios/${studioId}/availability?date=${date}`);
     check("availability starts empty", r.json?.data?.slots?.length === 0);
 
-    const C = new Session(); // third creator — renter + outsider role
+    const C = new Session(); 
     r = await C.call("/auth/register", {
       method: "POST",
       body: { name: "Third Creator", email: "third@studiospace.dev", password: "Passw0rd" },
@@ -256,13 +256,13 @@ async function main() {
 
     r = await B.call("/bookings/mine");
     check("my bookings lists 2", r.json?.data?.items?.length === 2);
-    
+
     const firstBookingId = r.json?.data?.items?.find((b) => b.startTime === "13:00")?._id;
 
     r = await guest.call("/bookings/mine");
     check("bookings/mine requires auth → 401", r.status === 401);
 
-    
+
     r = await B.call("/bookings", {
       method: "POST",
       body: { studioId, date, startTime: "07:00", hours: 1 },
@@ -282,7 +282,7 @@ async function main() {
     r = await A.call(`/studios/${studioId}/availability?date=${date}`);
     check("availability now shows taken slots", r.json?.data?.slots?.length === 2);
 
-    
+
     r = await C.call(`/bookings/${firstBookingId}/status`, { method: "PATCH", body: { status: "Cancelled" } });
     check("outsider cannot touch a booking → 403", r.status === 403);
 
@@ -311,7 +311,7 @@ async function main() {
     });
     check("pending slot also blocks double-booking → 409", r.status === 409, JSON.stringify(r.json));
 
-    
+
     r = await B.call("/wishlist", { method: "POST", body: { studioId } });
     check("wishlist save → added:true", r.json?.data?.added === true, JSON.stringify(r.json));
 
@@ -324,7 +324,7 @@ async function main() {
     r = await B.call(`/wishlist/${studioId}`, { method: "DELETE" });
     check("wishlist remove", r.status === 200 && r.json?.success === true);
 
-    
+
     r = await B.call(`/studios/${studioId}/reviews`, {
       method: "POST",
       body: { rating: 5, comment: "The cyc wall alone is worth it — light was gorgeous." },
@@ -347,7 +347,7 @@ async function main() {
     check("rating re-computed + count", r.json?.data?.studio?.rating === 5
       && r.json?.data?.studio?.reviewsCount === 1);
 
-    
+
     r = await B.call(`/studios/${studioId}`, {
       method: "PUT",
       body: { ...studioInput, hourlyRate: 1 },
@@ -364,7 +364,7 @@ async function main() {
     r = await B.call(`/studios/${studioId}`, { method: "DELETE" });
     check("non-owner delete → 403", r.status === 403);
 
-    
+
     r = await A.call("/auth/logout", { method: "POST" });
     check("logout clears the cookie", r.status === 200);
     r = await A.call("/auth/me");

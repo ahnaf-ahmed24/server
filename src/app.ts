@@ -11,23 +11,18 @@ import { wishlistRouter } from "./routes/wishlist.js";
 import { bookingsRouter } from "./routes/bookings.js";
 import { reviewsRouter } from "./routes/reviews.js";
 
-
 const app = express();
 
 app.set("trust proxy", 1);
 
-
 app.use(
   cors({
     origin: env.clientOrigins,
-    credentials: true, // auth JWT travels in an HTTPOnly cookie
+    credentials: true, 
   })
 );
 app.use(express.json({ limit: "1mb" }));
 app.use(cookieParser());
-
-
-
 
 app.get("/", (_req, res) => {
   res.json({
@@ -41,7 +36,6 @@ app.get("/", (_req, res) => {
     },
   });
 });
-
 
 app.get("/api", (_req, res) => {
   res.json({
@@ -77,9 +71,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/studios", studiosRouter);
 app.use("/api/wishlist", wishlistRouter);
 app.use("/api/bookings", bookingsRouter);
-app.use("/api", reviewsRouter); // nested paths: /api/studios/:id/reviews
+app.use("/api", reviewsRouter); 
 
-/* --------------------------- 404 + error tails ------------------------- */
 app.use(notFoundHandler);
 app.use(errorHandler);
 

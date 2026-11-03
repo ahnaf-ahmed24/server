@@ -180,7 +180,7 @@ function decodeState(encoded: string): OAuthState | null {
     if (state && typeof state === "object" && typeof state.csrf === "string")
       return state as OAuthState;
   } catch {
-    /* fall through */
+
   }
   return null;
 }

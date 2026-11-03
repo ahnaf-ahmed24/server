@@ -2,7 +2,6 @@
   "name": "server",
   "version": "1.0.0",
   "description": "StudioSpace API — Express 5 + TypeScript + MongoDB",
-  "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec tsx src/server.ts",
     "start": "tsx src/server.ts",
